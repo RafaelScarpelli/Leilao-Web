@@ -25,4 +25,7 @@ public class Perfil {
     public String getNome() {
         return tipo != null ? tipo.name() : null;
     }
+
+    public void setNome(String nome) {
+    }
 }
