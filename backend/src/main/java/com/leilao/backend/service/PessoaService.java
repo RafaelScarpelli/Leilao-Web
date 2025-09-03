@@ -47,7 +47,6 @@ public class PessoaService implements UserDetailsService {
         }
 
         Pessoa pessoaCadastrada = pessoaRepository.save(pessoa);
-        // enviarEmailSucesso(pessoaCadastrada);
         return pessoaCadastrada;
     }
 

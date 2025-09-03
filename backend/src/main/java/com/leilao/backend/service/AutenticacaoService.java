@@ -6,11 +6,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import com.leilao.backend.config.security.JwtService;
 import com.leilao.backend.dto.PessoaAutenticacaoDTO;
 import com.leilao.backend.dto.PessoaRequisicaoDTO;
 import com.leilao.backend.model.Pessoa;
 import com.leilao.backend.repository.PessoaRepository;
-import com.leilao.backend.security.JwtService;
 
 @Service
 public class AutenticacaoService {

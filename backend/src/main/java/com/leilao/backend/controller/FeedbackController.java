@@ -84,11 +84,4 @@ public class FeedbackController {
         List<Feedback> feedbacks = feedbackService.buscarPorDestinatario(destinatario);
         return ResponseEntity.ok(feedbacks);
     }
-
-    @GetMapping("/pessoa/{pessoaId}/media")
-    public ResponseEntity<Double> calcularMediaNota(@PathVariable Long pessoaId) {
-        Pessoa destinatario = pessoaService.buscarPorId(pessoaId);
-        Double media = feedbackService.calcularMediaNota(destinatario);
-        return ResponseEntity.ok(media != null ? media : 0.0);
-    }
 }

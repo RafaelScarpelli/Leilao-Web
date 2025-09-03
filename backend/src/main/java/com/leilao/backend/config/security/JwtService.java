@@ -1,4 +1,4 @@
-package com.leilao.backend.security;
+package com.leilao.backend.config.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

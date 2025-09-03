@@ -70,13 +70,6 @@ public class LanceController {
         return ResponseEntity.ok(lances);
     }
 
-    @GetMapping("/leilao/{leilaoId}")
-    public ResponseEntity<List<Lance>> buscarPorLeilao(@PathVariable Long leilaoId) {
-        Leilao leilao = leilaoService.buscarPorId(leilaoId);
-        List<Lance> lances = lanceService.buscarPorLeilaoOrdenado(leilao);
-        return ResponseEntity.ok(lances);
-    }
-
     @GetMapping("/leilao/{leilaoId}/maior")
     public ResponseEntity<Lance> buscarMaiorLance(@PathVariable Long leilaoId) {
         Leilao leilao = leilaoService.buscarPorId(leilaoId);

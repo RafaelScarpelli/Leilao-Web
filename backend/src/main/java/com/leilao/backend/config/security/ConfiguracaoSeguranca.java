@@ -1,4 +1,4 @@
-package com.leilao.backend.security;
+package com.leilao.backend.config.security;
 
 import java.util.List;
 
