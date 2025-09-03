@@ -1,18 +1,17 @@
 package com.leilao.backend.service;
 
-import java.rmi.NoSuchObjectException;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
+import com.leilao.backend.dto.PessoaCriacaoDTO;
+import com.leilao.backend.dto.PessoaResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 
@@ -31,11 +30,24 @@ public class PessoaService implements UserDetailsService {
     @Autowired
     private EmailService emailService;
 
-    public Pessoa inserir(Pessoa pessoa) {
+    @Autowired
+    @Lazy
+    private PasswordEncoder passwordEncoder;
+
+    public Pessoa inserir(PessoaCriacaoDTO pessoaCriacaoDTO) {
+        Pessoa pessoa = new Pessoa();
+        if (pessoaCriacaoDTO.getNome() != null && !pessoaCriacaoDTO.getNome().isEmpty()) {
+            pessoa.setNome(pessoaCriacaoDTO.getNome());
+        }
+        if (pessoaCriacaoDTO.getEmail() != null && !pessoaCriacaoDTO.getEmail().isEmpty()) {
+            pessoa.setEmail(pessoaCriacaoDTO.getEmail());
+        }
+        if (pessoaCriacaoDTO.getSenha() != null && !pessoaCriacaoDTO.getSenha().isEmpty()) {
+            pessoa.setSenha(passwordEncoder.encode(pessoaCriacaoDTO.getSenha()));
+        }
+
         Pessoa pessoaCadastrada = pessoaRepository.save(pessoa);
-        // emailService.enviarEmailSimples(pessoaCadastrada.getEmail(), "Cadastrado com
-        // Sucesso", "Cadastro no Sistema de Leilão XXX foi feito com sucesso!");
-        enviarEmailSucesso(pessoaCadastrada);
+        // enviarEmailSucesso(pessoaCadastrada);
         return pessoaCadastrada;
     }
 
@@ -46,10 +58,14 @@ public class PessoaService implements UserDetailsService {
     }
 
     public Pessoa alterar(Pessoa pessoa) {
-        // return pessoaRepository.save(pessoa);
         Pessoa pessoaBanco = buscarPorId(pessoa.getId());
         pessoaBanco.setNome(pessoa.getNome());
         pessoaBanco.setEmail(pessoa.getEmail());
+
+        if (pessoa.getSenha() != null && !pessoa.getSenha().isEmpty()) {
+            pessoaBanco.setSenha(passwordEncoder.encode(pessoa.getSenha()));
+        }
+
         return pessoaRepository.save(pessoaBanco);
     }
 
@@ -72,6 +88,27 @@ public class PessoaService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return pessoaRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Pessoa não encontrada"));
+    }
+
+    public Pessoa buscarPorEmail(String email) {
+        return pessoaRepository.findByEmail(email)
+                .orElseThrow(() -> new NaoEncontradoExcecao("Pessoa não encontrada com email: " + email));
+    }
+
+    public boolean verificarSenha(String email, String senhaTextoClaro) {
+        Pessoa pessoa = buscarPorEmail(email);
+        return passwordEncoder.matches(senhaTextoClaro, pessoa.getSenha());
+    }
+
+    public PessoaResponseDTO converterParaDTO(Pessoa pessoa) {
+        return new PessoaResponseDTO(
+                pessoa.getId(),
+                pessoa.getNome(),
+                pessoa.getEmail(),
+                pessoa.getCodigoValidacao(),
+                pessoa.getValidadeCodigoValidacao(),
+                pessoa.getAtivo(),
+                pessoa.getPessoaPerfil());
     }
 
 }

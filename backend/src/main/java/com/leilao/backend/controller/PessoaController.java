@@ -2,6 +2,8 @@ package com.leilao.backend.controller;
 
 import java.util.List;
 
+import com.leilao.backend.dto.PessoaCriacaoDTO;
+import com.leilao.backend.dto.PessoaResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +21,6 @@ import com.leilao.backend.model.Pessoa;
 import com.leilao.backend.service.PessoaService;
 
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/pessoa")
@@ -30,18 +31,21 @@ public class PessoaController {
 
     @GetMapping
     public ResponseEntity<Page<Pessoa>> buscarTodos(Pageable pageable) {
-
         return ResponseEntity.ok(pessoaService.buscarTodos(pageable));
     }
 
     @PostMapping
-    public ResponseEntity<Pessoa> inserir(@Valid @RequestBody Pessoa pessoa) {
-        return ResponseEntity.ok(pessoaService.inserir(pessoa));
+    public ResponseEntity<PessoaResponseDTO> inserir(@Valid @RequestBody PessoaCriacaoDTO pessoaCriacaoDTO) {
+        Pessoa pessoaCadastrada = pessoaService.inserir(pessoaCriacaoDTO);
+        PessoaResponseDTO resposta = pessoaService.converterParaDTO(pessoaCadastrada);
+        return ResponseEntity.ok(resposta);
     }
 
     @PutMapping
-    public ResponseEntity<Pessoa> alterar(@Valid @RequestBody Pessoa pessoa) {
-        return ResponseEntity.ok(pessoaService.alterar(pessoa));
+    public ResponseEntity<PessoaResponseDTO> alterar(@Valid @RequestBody Pessoa pessoa) {
+        Pessoa pessoaAlterada = pessoaService.alterar(pessoa);
+        PessoaResponseDTO resposta = pessoaService.converterParaDTO(pessoaAlterada);
+        return ResponseEntity.ok(resposta);
     }
 
     @DeleteMapping("/{id}")

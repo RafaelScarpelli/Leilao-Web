@@ -52,10 +52,6 @@ public class LanceService {
         return lanceRepository.findByLeilao(leilao);
     }
 
-    public List<Lance> buscarPorLeilaoOrdenado(Leilao leilao) {
-        return lanceRepository.findByLeilaoOrderByValorLanceDesc(leilao);
-    }
-
     public Optional<Lance> buscarMaiorLance(Leilao leilao) {
         return lanceRepository.findMaiorLanceByLeilao(leilao);
     }
