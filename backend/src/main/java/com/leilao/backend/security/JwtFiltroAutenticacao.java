@@ -1,6 +1,7 @@
 package com.leilao.backend.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -23,7 +24,8 @@ public class JwtFiltroAutenticacao extends OncePerRequestFilter {
     private JwtService jwtService;
 
     @Autowired
-    private PessoaService  pessoaService;
+    @Lazy
+    private PessoaService pessoaService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -41,8 +43,7 @@ public class JwtFiltroAutenticacao extends OncePerRequestFilter {
             var userDetails = pessoaService.loadUserByUsername(username);
             if (jwtService.validateToken(token, userDetails.getUsername())) {
                 var authentication = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities()
-                );
+                        userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }

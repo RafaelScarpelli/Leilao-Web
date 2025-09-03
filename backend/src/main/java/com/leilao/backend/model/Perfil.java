@@ -1,6 +1,6 @@
 package com.leilao.backend.model;
 
-import com.leilao.backend.enums.TipoPerfil;
+import com.leilao.backend.model.enums.TipoPerfil;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
