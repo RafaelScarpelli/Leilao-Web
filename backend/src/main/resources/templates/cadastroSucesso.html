@@ -1,6 +1,35 @@
-<html>
-    <body>
-        <h1>Cadastro Efetuado com Sucesso</h1><br/>
-        <p>Olá, <span th:text="${nome}"></span>.</p>
-    </body>
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro Realizado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastro Efetuado com Sucesso</h1>
+        <p>Olá, <strong th:text="${nome}">Usuário</strong>!</p>
+        <p>Seja bem-vindo(a). Seu cadastro foi realizado com sucesso.</p>
+    </div>
+</body>
 </html>
