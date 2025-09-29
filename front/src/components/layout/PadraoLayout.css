@@ -10,14 +10,17 @@
     flex-direction: column;
 }
 
+/* Ensure the footer stays at the bottom */
 .layout-container > footer {
     margin-top: auto;
 }
 
+/* Add some padding to prevent content from touching edges */
 .main-content {
     padding: 0 0 20px 0;
 }
 
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .main-content {
         padding: 0 0 15px 0;
