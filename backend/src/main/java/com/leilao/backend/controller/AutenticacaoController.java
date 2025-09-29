@@ -20,6 +20,6 @@ public class AutenticacaoController {
 
     @PostMapping("/login")
     public ResponseEntity<PessoaAutenticacaoDTO> login(@RequestBody PessoaRequisicaoDTO pessoa) {
-        return ResponseEntity.ok(autenticacaoService.autenticar(pessoa));
+        return  ResponseEntity.ok(autenticacaoService.autenticar(pessoa));
     }
 }

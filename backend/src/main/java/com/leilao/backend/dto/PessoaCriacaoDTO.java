@@ -8,4 +8,6 @@ public class PessoaCriacaoDTO {
     private String nome;
     private String email;
     private String senha;
+    @Lob
+    private byte[] fotoPerfil;
 }

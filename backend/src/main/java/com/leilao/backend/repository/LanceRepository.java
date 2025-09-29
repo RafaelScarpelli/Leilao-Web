@@ -15,8 +15,10 @@ import com.leilao.backend.model.Pessoa;
 @Repository
 public interface LanceRepository extends JpaRepository<Lance, Long> {
     List<Lance> findByComprador(Pessoa comprador);
-
     List<Lance> findByLeilao(Leilao leilao);
+
+    @Query("SELECT l FROM Lance l WHERE l.leilao = :leilao ORDER BY l.valorLance DESC")
+    List<Lance> findByLeilaoOrderByValorLanceDesc(@Param("leilao") Leilao leilao);
 
     @Query("SELECT l FROM Lance l WHERE l.leilao = :leilao ORDER BY l.valorLance DESC LIMIT 1")
     Optional<Lance> findMaiorLanceByLeilao(@Param("leilao") Leilao leilao);

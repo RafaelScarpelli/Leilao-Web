@@ -1,4 +1,4 @@
-package com.leilao.backend.config.security;
+package com.leilao.backend.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

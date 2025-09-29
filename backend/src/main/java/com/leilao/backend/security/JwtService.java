@@ -1,4 +1,4 @@
-package com.leilao.backend.config.security;
+package com.leilao.backend.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,8 +24,8 @@ public class JwtService {
     private Key key;
 
     @PostConstruct
-    public void init() {
-        key = Keys.hmacShaKeyFor(secretKey.getBytes());
+    public void init(){
+         key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
     public String generateToken(String username) {
@@ -53,7 +53,7 @@ public class JwtService {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(key)
+                .setSigningKey(key) 
                 .build()
                 .parseClaimsJws(token)
                 .getBody();

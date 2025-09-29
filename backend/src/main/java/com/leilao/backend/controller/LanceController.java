@@ -27,28 +27,28 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/lances")
 public class LanceController {
-
+    
     @Autowired
     private LanceService lanceService;
-
+    
     @Autowired
     private PessoaService pessoaService;
-
+    
     @Autowired
     private LeilaoService leilaoService;
-
+    
     @GetMapping
     public ResponseEntity<List<Lance>> listar() {
         List<Lance> lances = lanceService.listarTodos();
         return ResponseEntity.ok(lances);
     }
-
+    
     @GetMapping("/{id}")
     public ResponseEntity<Lance> buscarPorId(@PathVariable Long id) {
         Lance lance = lanceService.buscarPorId(id);
         return ResponseEntity.ok(lance);
     }
-
+    
     @PostMapping
     public ResponseEntity<Lance> criar(@Valid @RequestBody Lance lance, Authentication auth) {
         Pessoa comprador = pessoaService.buscarPorEmail(auth.getName());
@@ -56,25 +56,32 @@ public class LanceController {
         Lance lanceSalvo = lanceService.salvar(lance);
         return ResponseEntity.status(HttpStatus.CREATED).body(lanceSalvo);
     }
-
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         lanceService.deletar(id);
         return ResponseEntity.noContent().build();
     }
-
+    
     @GetMapping("/meus")
     public ResponseEntity<List<Lance>> buscarMeusLances(Authentication auth) {
         Pessoa comprador = pessoaService.buscarPorEmail(auth.getName());
         List<Lance> lances = lanceService.buscarPorComprador(comprador);
         return ResponseEntity.ok(lances);
     }
-
+    
+    @GetMapping("/leilao/{leilaoId}")
+    public ResponseEntity<List<Lance>> buscarPorLeilao(@PathVariable Long leilaoId) {
+        Leilao leilao = leilaoService.buscarPorId(leilaoId);
+        List<Lance> lances = lanceService.buscarPorLeilaoOrdenado(leilao);
+        return ResponseEntity.ok(lances);
+    }
+    
     @GetMapping("/leilao/{leilaoId}/maior")
     public ResponseEntity<Lance> buscarMaiorLance(@PathVariable Long leilaoId) {
         Leilao leilao = leilaoService.buscarPorId(leilaoId);
         Optional<Lance> maiorLance = lanceService.buscarMaiorLance(leilao);
         return maiorLance.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                        .orElse(ResponseEntity.notFound().build());
     }
 }

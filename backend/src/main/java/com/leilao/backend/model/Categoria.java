@@ -24,17 +24,17 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    
     @NotBlank(message = "Nome é obrigatório")
     private String nome;
-
+    
     private String observacao;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "criador_id")
     @JsonIgnore
     private Pessoa criador;
-
+    
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Leilao> leiloes;

@@ -22,18 +22,18 @@ public class Lance {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    
     @NotNull(message = "Valor do lance é obrigatório")
     private Float valorLance;
-
+    
     @NotNull(message = "Data e hora são obrigatórias")
     private LocalDateTime dataHora = LocalDateTime.now();
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comprador_id")
     @JsonIgnore
     private Pessoa comprador;
-
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "leilao_id")
     @JsonIgnore

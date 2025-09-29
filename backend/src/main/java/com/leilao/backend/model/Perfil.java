@@ -1,6 +1,6 @@
 package com.leilao.backend.model;
 
-import com.leilao.backend.model.enums.TipoPerfil;
+import com.leilao.backend.enums.TipoPerfil;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,10 +22,8 @@ public class Perfil {
     @Enumerated(EnumType.STRING)
     private TipoPerfil tipo;
 
+    // Mantendo o nome para compatibilidade com o sistema de segurança existente
     public String getNome() {
         return tipo != null ? tipo.name() : null;
-    }
-
-    public void setNome(String nome) {
     }
 }

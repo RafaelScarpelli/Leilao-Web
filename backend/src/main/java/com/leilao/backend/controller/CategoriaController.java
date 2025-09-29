@@ -26,25 +26,25 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
-
+    
     @Autowired
     private CategoriaService categoriaService;
-
+    
     @Autowired
     private PessoaService pessoaService;
-
+    
     @GetMapping
     public ResponseEntity<List<Categoria>> listar() {
         List<Categoria> categorias = categoriaService.listarTodas();
         return ResponseEntity.ok(categorias);
     }
-
+    
     @GetMapping("/{id}")
     public ResponseEntity<Categoria> buscarPorId(@PathVariable Long id) {
         Categoria categoria = categoriaService.buscarPorId(id);
         return ResponseEntity.ok(categoria);
     }
-
+    
     @PostMapping
     public ResponseEntity<Categoria> criar(@Valid @RequestBody Categoria categoria, Authentication auth) {
         Pessoa criador = pessoaService.buscarPorEmail(auth.getName());
@@ -52,25 +52,25 @@ public class CategoriaController {
         Categoria categoriaSalva = categoriaService.salvar(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaSalva);
     }
-
+    
     @PutMapping("/{id}")
     public ResponseEntity<Categoria> atualizar(@PathVariable Long id, @Valid @RequestBody Categoria categoria) {
         Categoria categoriaAtualizada = categoriaService.atualizar(id, categoria);
         return ResponseEntity.ok(categoriaAtualizada);
     }
-
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         categoriaService.deletar(id);
         return ResponseEntity.noContent().build();
     }
-
+    
     @GetMapping("/buscar")
     public ResponseEntity<List<Categoria>> buscarPorNome(@RequestParam String nome) {
         List<Categoria> categorias = categoriaService.buscarPorNome(nome);
         return ResponseEntity.ok(categorias);
     }
-
+    
     @GetMapping("/minhas")
     public ResponseEntity<List<Categoria>> buscarMinhasCategorias(Authentication auth) {
         Pessoa criador = pessoaService.buscarPorEmail(auth.getName());

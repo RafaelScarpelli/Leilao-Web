@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.leilao.backend.model.enums.StatusLeilao;
+import com.leilao.backend.enums.StatusLeilao;
 import com.leilao.backend.model.Categoria;
 import com.leilao.backend.model.Leilao;
 import com.leilao.backend.model.Pessoa;

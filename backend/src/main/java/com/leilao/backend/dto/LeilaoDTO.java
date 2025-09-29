@@ -1,6 +1,6 @@
 package com.leilao.backend.dto;
 
-import com.leilao.backend.model.enums.StatusLeilao;
+import com.leilao.backend.enums.StatusLeilao;
 import lombok.Data;
 
 import java.time.LocalDateTime;

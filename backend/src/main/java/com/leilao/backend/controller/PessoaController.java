@@ -3,7 +3,7 @@ package com.leilao.backend.controller;
 import java.util.List;
 
 import com.leilao.backend.dto.PessoaCriacaoDTO;
-import com.leilao.backend.dto.PessoaResponseDTO;
+import com.leilao.backend.dto.PessoaRespostaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,16 +35,16 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<PessoaResponseDTO> inserir(@Valid @RequestBody PessoaCriacaoDTO pessoaCriacaoDTO) {
+    public ResponseEntity<PessoaRespostaDTO> inserir(@Valid @RequestBody PessoaCriacaoDTO pessoaCriacaoDTO) {
         Pessoa pessoaCadastrada = pessoaService.inserir(pessoaCriacaoDTO);
-        PessoaResponseDTO resposta = pessoaService.converterParaDTO(pessoaCadastrada);
+        PessoaRespostaDTO resposta = pessoaService.converterParaDTO(pessoaCadastrada);
         return ResponseEntity.ok(resposta);
     }
 
     @PutMapping
-    public ResponseEntity<PessoaResponseDTO> alterar(@Valid @RequestBody Pessoa pessoa) {
+    public ResponseEntity<PessoaRespostaDTO> alterar(@Valid @RequestBody Pessoa pessoa) {
         Pessoa pessoaAlterada = pessoaService.alterar(pessoa);
-        PessoaResponseDTO resposta = pessoaService.converterParaDTO(pessoaAlterada);
+        PessoaRespostaDTO resposta = pessoaService.converterParaDTO(pessoaAlterada);
         return ResponseEntity.ok(resposta);
     }
 

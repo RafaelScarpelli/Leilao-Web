@@ -26,51 +26,51 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/pagamentos")
 public class PagamentoController {
-
+    
     @Autowired
     private PagamentoService pagamentoService;
-
+    
     @Autowired
     private LeilaoService leilaoService;
-
+    
     @GetMapping
     public ResponseEntity<List<Pagamento>> listar() {
         List<Pagamento> pagamentos = pagamentoService.listarTodos();
         return ResponseEntity.ok(pagamentos);
     }
-
+    
     @GetMapping("/{id}")
     public ResponseEntity<Pagamento> buscarPorId(@PathVariable Long id) {
         Pagamento pagamento = pagamentoService.buscarPorId(id);
         return ResponseEntity.ok(pagamento);
     }
-
+    
     @PostMapping
     public ResponseEntity<Pagamento> criar(@Valid @RequestBody Pagamento pagamento) {
         Pagamento pagamentoSalvo = pagamentoService.salvar(pagamento);
         return ResponseEntity.status(HttpStatus.CREATED).body(pagamentoSalvo);
     }
-
+    
     @PutMapping("/{id}")
     public ResponseEntity<Pagamento> atualizar(@PathVariable Long id, @Valid @RequestBody Pagamento pagamento) {
         Pagamento pagamentoAtualizado = pagamentoService.atualizar(id, pagamento);
         return ResponseEntity.ok(pagamentoAtualizado);
     }
-
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         pagamentoService.deletar(id);
         return ResponseEntity.noContent().build();
     }
-
+    
     @GetMapping("/leilao/{leilaoId}")
     public ResponseEntity<Pagamento> buscarPorLeilao(@PathVariable Long leilaoId) {
         Leilao leilao = leilaoService.buscarPorId(leilaoId);
         Optional<Pagamento> pagamento = pagamentoService.buscarPorLeilao(leilao);
         return pagamento.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                       .orElse(ResponseEntity.notFound().build());
     }
-
+    
     @GetMapping("/status")
     public ResponseEntity<List<Pagamento>> buscarPorStatus(@RequestParam String status) {
         List<Pagamento> pagamentos = pagamentoService.buscarPorStatus(status);

@@ -12,6 +12,5 @@ import com.leilao.backend.model.Pagamento;
 @Repository
 public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
     Optional<Pagamento> findByLeilao(Leilao leilao);
-
     List<Pagamento> findByStatus(String status);
 }

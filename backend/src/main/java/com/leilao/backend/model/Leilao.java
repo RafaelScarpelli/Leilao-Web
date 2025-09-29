@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.leilao.backend.model.enums.StatusLeilao;
+import com.leilao.backend.enums.StatusLeilao;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

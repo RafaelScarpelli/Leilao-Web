@@ -13,6 +13,8 @@ import com.leilao.backend.model.Pessoa;
 @Repository
 public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     List<Feedback> findByAutor(Pessoa autor);
-
     List<Feedback> findByDestinatario(Pessoa destinatario);
+
+    @Query("SELECT AVG(f.nota) FROM Feedback f WHERE f.destinatario = :pessoa")
+    Double findMediaNotasByDestinatario(@Param("pessoa") Pessoa pessoa);
 }

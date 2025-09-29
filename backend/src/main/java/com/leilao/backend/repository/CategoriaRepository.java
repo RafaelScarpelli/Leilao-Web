@@ -11,6 +11,5 @@ import com.leilao.backend.model.Pessoa;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
     List<Categoria> findByCriador(Pessoa criador);
-
     List<Categoria> findByNomeContainingIgnoreCase(String nome);
 }

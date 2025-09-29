@@ -19,6 +19,7 @@ import com.leilao.backend.model.Perfil;
 import com.leilao.backend.service.PerfilService;
 
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/perfil")

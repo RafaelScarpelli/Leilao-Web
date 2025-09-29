@@ -1,7 +1,7 @@
 package com.leilao.backend.service;
 
 import com.leilao.backend.dto.PessoaCriacaoDTO;
-import com.leilao.backend.dto.PessoaResponseDTO;
+import com.leilao.backend.dto.PessoaRespostaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Lazy;
@@ -45,8 +45,12 @@ public class PessoaService implements UserDetailsService {
         if (pessoaCriacaoDTO.getSenha() != null && !pessoaCriacaoDTO.getSenha().isEmpty()) {
             pessoa.setSenha(passwordEncoder.encode(pessoaCriacaoDTO.getSenha()));
         }
+        if (pessoaCriacaoDTO.getFotoPerfil() != null) {
+            pessoa.setFotoPerfil(pessoaCriacaoDTO.getFotoPerfil());
+        }
 
         Pessoa pessoaCadastrada = pessoaRepository.save(pessoa);
+//        enviarEmailSucesso(pessoaCadastrada);
         return pessoaCadastrada;
     }
 
@@ -99,15 +103,17 @@ public class PessoaService implements UserDetailsService {
         return passwordEncoder.matches(senhaTextoClaro, pessoa.getSenha());
     }
 
-    public PessoaResponseDTO converterParaDTO(Pessoa pessoa) {
-        return new PessoaResponseDTO(
-                pessoa.getId(),
-                pessoa.getNome(),
-                pessoa.getEmail(),
-                pessoa.getCodigoValidacao(),
-                pessoa.getValidadeCodigoValidacao(),
-                pessoa.getAtivo(),
-                pessoa.getPessoaPerfil());
+    public PessoaRespostaDTO converterParaDTO(Pessoa pessoa) {
+        return new PessoaRespostaDTO(
+            pessoa.getId(),
+            pessoa.getNome(),
+            pessoa.getEmail(),
+            pessoa.getCodigoValidacao(),
+            pessoa.getValidadeCodigoValidacao(),
+            pessoa.getAtivo(),
+            pessoa.getFotoPerfil(),
+            pessoa.getPessoaPerfil()
+        );
     }
 
 }
